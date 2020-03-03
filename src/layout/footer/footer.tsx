@@ -1,7 +1,6 @@
 import React from 'react';
 
 import './footer.scss';
-import { Button } from '@material-ui/core';
 
 export default class Footer extends React.Component {
     constructor(public props) {
@@ -9,7 +8,6 @@ export default class Footer extends React.Component {
     }
 
     onBackToTopClicked() {
-        console.log("test");
         window.scrollTo({
             top: 0,
             left: 0,

@@ -1,9 +1,7 @@
 .footer {
-    width: 100%;
     text-align: center;
-    background-color: #240277;
-    padding-top: 10px;
-    padding-bottom: 10px;
+    background-color: #292929;
+    padding: 2%;
 
     .footer-back-to-top-button {
         width: 10%;
@@ -34,9 +32,15 @@
 
     .footer-designed-by {
         font-family: "Share";
-        font-size: 20px;
+        font-size: 12px;
         padding: 10px;
         color: #d2c9c9;
         text-shadow: 2px 1px 2px #000000;
+    }
+
+    @media screen and (max-width: 600px) {
+        .footer-back-to-top-button {
+            width: 50%;
+        }
     }
 }
