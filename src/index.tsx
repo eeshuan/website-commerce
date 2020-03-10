@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Routes from './routes/routes';
+import Routes from './pages/routes/routes';
 
 export default class Main extends React.Component {
   constructor(public props) {
