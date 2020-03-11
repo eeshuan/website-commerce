@@ -5,24 +5,24 @@ import ItemCard from '../../components/itemCard/itemCard';
 import Item from '../../scripts/class/item';
 
 import './store.scss';
+import { assetsMap } from '../../assets/assetsMap';
 
 export default class Store extends React.Component {
     private testItems: Array<Item>;
-    private imageUrl: string = "https://static.wixstatic.com/media/05e173_e4a59b04cb5f412fae2ac5218415f09f~mv2.jpg/v1/fill/w_546,h_818,al_c,q_85,usm_0.66_1.00_0.01/05e173_e4a59b04cb5f412fae2ac5218415f09f~mv2.webp";
-    
+
     constructor(public props) {
         super(props);
 
         this.testItems = [
-            new Item("Item 1", 10, this.imageUrl),
-            new Item("Item 2", 11, this.imageUrl),
-            new Item("Item 3", 12, this.imageUrl),
-            new Item("Item 4", 13, this.imageUrl),
-            new Item("Item 5", 14, this.imageUrl),
-            new Item("Item 6", 15, this.imageUrl),
-            new Item("Item 7", 16, this.imageUrl),
-            new Item("Item 8", 17, this.imageUrl),
-            new Item("Item 9", 18, this.imageUrl),
+            new Item(`Item 1`, 10, assetsMap.pages.store.item, `item-1`),
+            new Item(`Item 2`, 11, assetsMap.pages.store.item, `item-2`),
+            new Item(`Item 3`, 12, assetsMap.pages.store.item, `item-3`),
+            new Item(`Item 4`, 13, assetsMap.pages.store.item, `item-4`),
+            new Item(`Item 5`, 14, assetsMap.pages.store.item, `item-5`),
+            new Item(`Item 6`, 15, assetsMap.pages.store.item, `item-6`),
+            new Item(`Item 7`, 16, assetsMap.pages.store.item, `item-7`),
+            new Item(`Item 8`, 17, assetsMap.pages.store.item, `item-8`),
+            new Item(`Item 9`, 18, assetsMap.pages.store.item, `item-9`),
         ];
     }
 

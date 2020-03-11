@@ -2,11 +2,13 @@ export default class Item {
     private _itemName: string;
     private _price: number;
     private _imagePath: string;
+    private _urlPath: string;
 
-    constructor(itemName: string, price: number, imagePath: string) {
+    constructor(itemName: string, price: number, imagePath: string, urlPath: string) {
         this._itemName = itemName;
         this._price = price;
         this._imagePath = imagePath;
+        this._urlPath = urlPath;
     }
 
     get name() {
@@ -19,5 +21,9 @@ export default class Item {
 
     get image() {
         return this._imagePath;
+    }
+
+    get urlPath() {
+        return this._urlPath;
     }
 }
