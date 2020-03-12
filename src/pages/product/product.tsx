@@ -1,18 +1,38 @@
 import React from 'react';
 import Layout from '../layout/layout';
+import { Grid, Button } from '@material-ui/core';
+import { testdata } from '../../testdata/testdata';
 
 import './product.scss';
 
 export default class Product extends React.Component {
+    private _itemDetails: {name: string, price: number, imageUrl: string};
+    
     constructor(public props) {
         super(props);
+        this._itemDetails = testdata.items[this.props.match.params.name] || {name: "Cannot find name", price: 0, imageUrl: ""};
     }
 
     render() {
         return (
             <Layout>
                 <div className="product">
-                    {this.props.match.params.name || "Cannot find name"}
+                    <Grid container justify="center" alignItems="center">
+                        <Grid item xs={4}>
+                            <img src={this._itemDetails.imageUrl} style={{width: '300px'}}></img>
+                        </Grid>
+                        <Grid item xs={8}>
+                            <div>
+                                Name: {this._itemDetails.name}
+                            </div>
+                            <div>
+                                Price: ${this._itemDetails.price}
+                            </div>
+                            <Button>
+                                Add To Cart
+                            </Button>
+                        </Grid>
+                    </Grid>
                 </div>
             </Layout>
         );
