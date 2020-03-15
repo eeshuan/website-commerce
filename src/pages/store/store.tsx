@@ -15,7 +15,7 @@ export default class Store extends React.Component {
         this.testItems = [];
         Object.keys(testdata.items).map((key: string, index: number) => {
             let item: {name: string, price: number, imageUrl: string} = testdata.items[key];
-            this.testItems[index] = new Item(item.name, item.price, item.imageUrl, key);
+            this.testItems[index] = new Item(key, item.name, item.price, item.imageUrl, key);
         });
     }
 

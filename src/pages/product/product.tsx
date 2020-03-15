@@ -2,6 +2,7 @@ import React from 'react';
 import Layout from '../layout/layout';
 import { Grid, Button } from '@material-ui/core';
 import { testdata } from '../../testdata/testdata';
+import { CartCache } from '../../scripts/cache/cartCache';
 
 import './product.scss';
 
@@ -11,6 +12,10 @@ export default class Product extends React.Component {
     constructor(public props) {
         super(props);
         this._itemDetails = testdata.items[this.props.match.params.name] || {name: "Cannot find name", price: 0, imageUrl: ""};
+    }
+
+    private onAddToCartClick() {
+        CartCache.instance.addItems(this.props.match.params.name);
     }
 
     render() {
@@ -28,7 +33,7 @@ export default class Product extends React.Component {
                             <div>
                                 Price: ${this._itemDetails.price}
                             </div>
-                            <Button>
+                            <Button onClick={this.onAddToCartClick.bind(this)}>
                                 Add To Cart
                             </Button>
                         </Grid>
