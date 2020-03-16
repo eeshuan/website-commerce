@@ -28,6 +28,7 @@
     "babel-plugin-transform-class-properties": "^6.24.1",
     "react": "^16.6.3",
     "react-dom": "^16.6.3",
+    "react-paypal-express-checkout": "^1.0.5",
     "react-router-dom": "^5.1.2"
   },
   "devDependencies": {

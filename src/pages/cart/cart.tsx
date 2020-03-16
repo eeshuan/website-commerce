@@ -2,9 +2,10 @@ import React from 'react';
 import Layout from '../layout/layout';
 import { Grid, TextField } from '@material-ui/core';
 import { testdata } from '../../testdata/testdata';
+import { CartCache } from '../../scripts/cache/cartCache';
+import PaypalExpressBtn from 'react-paypal-express-checkout';
 
 import './cart.scss';
-import { CartCache } from '../../scripts/cache/cartCache';
 
 export default class Cart extends React.Component {
     private _sessionKey: string = `cart`;
@@ -12,7 +13,9 @@ export default class Cart extends React.Component {
     private _itemDetails: {[key: string]: {name: string, price: number, imageUrl: string}};
 
     state = {
-        totalCost: 0
+        totalCost: 0,
+        taxCost: 0,
+        totalCostWithTax: 0
     };
 
     constructor(public props) {
@@ -36,6 +39,8 @@ export default class Cart extends React.Component {
             this.state[key] = this._itemQuantity[key];
         });
         this.state.totalCost = this.calculateTotalCost();
+        this.state.taxCost = this.calculateTax();
+        this.state.totalCostWithTax = this.calculateTotalCostWithTax();
     }
 
     private updateAmount(itemId: string, event) {
@@ -48,7 +53,12 @@ export default class Cart extends React.Component {
             amount = 99999;
         }
         CartCache.instance.setItems(itemId, amount);
-        this.setState({[`${itemId}`]: amount, totalCost: this.calculateTotalCost()});
+        this.setState({
+            [`${itemId}`]: amount,
+            totalCost: this.calculateTotalCost(),
+            taxCost: this.calculateTax(),
+            totalCostWithTax: this.calculateTotalCostWithTax()
+        });
     }
 
     private calculateTotalCost(): number {
@@ -57,6 +67,48 @@ export default class Cart extends React.Component {
             totalCost += this._itemDetails[key].price * CartCache.instance.getCount(key);
         });
         return totalCost;
+    }
+
+    private calculateTax(): number {
+        return this.calculateTotalCost() * 0.07;
+    }
+
+    private calculateTotalCostWithTax(): number {
+        return this.calculateTotalCost() + this.calculateTax();
+    }
+
+    private onPaymentSuccess() {
+        console.log(`Success in a payment of ${this.state.totalCostWithTax}`);
+        alert(`Payment Success!`);
+        CartCache.instance.clearCache();
+        location.reload();
+    }
+
+    private onPaymentFail() {
+        console.log(`Error in payment`);
+    }
+
+    private onPaymentCancel() {
+        console.log(`Cancelled Payment`);
+    }
+
+    private getPaypalCheckoutButtonState() {
+        if (this.state.totalCostWithTax > 0) {
+            return(
+                <PaypalExpressBtn
+                    env={`sandbox`}
+                    client={{
+                        sandbox:    'AbVNQoDKa7BwDXScFpMtHGkyEf9naXv7nDu5FqITx8c7kRP2825iuM6wfgGmIQqBhzBrnw042xyJTtXZ',
+                        production: 'YOUR-PRODUCTION-APP-ID',
+                    }}
+                    currency={`SGD`}
+                    total={this.state.totalCostWithTax}
+                    onError={this.onPaymentFail.bind(this)}
+                    onSuccess={this.onPaymentSuccess.bind(this)}
+                    onCancel={this.onPaymentCancel.bind(this)}
+                />
+            );
+        }
     }
 
     render () {
@@ -123,14 +175,16 @@ export default class Cart extends React.Component {
                                     Tax (7%): 
                                 </Grid>
                                 <Grid item xs={6}>
-                                    {(this.state.totalCost * 0.07).toFixed(2)} 
+                                    {(this.state.taxCost).toFixed(2)} 
                                 </Grid>
                                 <Grid item xs={6}>
                                     Total: 
                                 </Grid>
                                 <Grid item xs={6}>
-                                    {(Number((this.state.totalCost).toFixed(2)) + 
-                                    Number((this.state.totalCost * 0.07).toFixed(2))).toFixed(2)} 
+                                    {(this.state.totalCostWithTax).toFixed(2)} 
+                                </Grid>
+                                <Grid item xs={12}>
+                                    {this.getPaypalCheckoutButtonState()}
                                 </Grid>
                             </Grid>
                         </Grid>
