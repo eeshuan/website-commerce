@@ -1,9 +1,10 @@
 import React from 'react';
 import Layout from '../layout/layout';
-import { Grid, TextField } from '@material-ui/core';
+import { Grid, TextField, Button } from '@material-ui/core';
 import { testdata } from '../../testdata/testdata';
 import { CartCache } from '../../scripts/cache/cartCache';
 import PaypalExpressBtn from 'react-paypal-express-checkout';
+import { formatNumberString } from '../../scripts/utils/utils';
 
 import './cart.scss';
 
@@ -116,77 +117,101 @@ export default class Cart extends React.Component {
             <Layout>
                 <div className="cart">
                     <Grid container justify="center" alignItems="center">
-                        <Grid item xs={12} sm={8}>
-                            <div>
+                        <Grid item xs={12} md={9} className="cart-order-summary">
+                            <div className="page-title-style">
                                 Order Summary
                             </div>
-                            <Grid container justify="center" alignItems="center">
-                                <Grid item xs={6}>
-                                    Product
+                            <div className="cart-order-summary-list">
+                                <Grid container justify="center" alignItems="center">
+                                    <Grid item xs={6} className="column-header-style">
+                                        Product
+                                    </Grid>
+                                    <Grid item xs={2} className="column-header-style">
+                                        Price
+                                    </Grid>
+                                    <Grid item xs={2} className="column-header-style">
+                                        Quantity
+                                    </Grid>
+                                    <Grid item xs={2} className="column-header-style">
+                                        Item Total
+                                    </Grid>
                                 </Grid>
-                                <Grid item xs={2}>
-                                    Price
-                                </Grid>
-                                <Grid item xs={2}>
-                                    Quantity
-                                </Grid>
-                                <Grid item xs={2}>
-                                    Item Total
-                                </Grid>
-                            </Grid>
-                            {
-                                    Object.keys(this._itemDetails).map((key: string, index: number) => {
-                                        return (
-                                            <Grid container justify="center" alignItems="center" key={index}>
-                                                <Grid item xs={6}>
-                                                    <img src={this._itemDetails[key].imageUrl} style={{width: '50px'}}></img>
-                                                    {this._itemDetails[key].name}
+                                <div className="cart-order-summary-list-items">
+                                    {
+                                        Object.keys(this._itemDetails).map((key: string, index: number) => {
+                                            return (
+                                                <Grid container justify="center" alignItems="center" key={index}>
+                                                    <Grid item xs={6} className="cart-order-summary-list-items-style">
+                                                        <Grid container alignItems="center" justify="center">
+                                                            <Grid item xs={4}>
+                                                                <img src={this._itemDetails[key].imageUrl} style={{width: '100px'}}></img>
+                                                            </Grid>
+                                                            <Grid xs={8}>
+                                                                <div>
+                                                                    {this._itemDetails[key].name}
+                                                                </div>
+                                                                <div>
+                                                                    Item Description here
+                                                                </div>
+                                                                <br></br>
+                                                                <div>
+                                                                    Ref no: 1234567890
+                                                                </div>
+                                                            </Grid>
+                                                        </Grid>
+                                                    </Grid>
+                                                    <Grid item xs={2} className="cart-order-summary-list-items-style">
+                                                        ${formatNumberString(this._itemDetails[key].price)}
+                                                    </Grid>
+                                                    <Grid item xs={2}>
+                                                        <TextField
+                                                            value={this.state[key]}
+                                                            onChange={this.updateAmount.bind(this, key)}
+                                                            type="number"
+                                                            variant="outlined"
+                                                            margin="normal"
+                                                            classes={{root: "cart-order-summary-list-items-quantity-style"}}
+                                                        />
+                                                    </Grid>
+                                                    <Grid item xs={2} className="cart-order-summary-list-items-style">
+                                                        ${formatNumberString(this._itemDetails[key].price * this.state[key])}
+                                                    </Grid>
                                                 </Grid>
-                                                <Grid item xs={2}>
-                                                    {this._itemDetails[key].price}
-                                                </Grid>
-                                                <Grid item xs={2}>
-                                                <TextField
-                                                    value={this.state[key]}
-                                                    label="Amount"
-                                                    onChange={this.updateAmount.bind(this, key)}
-                                                    type="number"
-                                                    variant="outlined"
-                                                    margin="normal"
-                                                />
-                                                </Grid>
-                                                <Grid item xs={2}>
-                                                    {this._itemDetails[key].price * this.state[key]}
-                                                </Grid>
-                                            </Grid>
-                                        );
-                                    })
-                                }
+                                            );
+                                        })
+                                    }
+                                </div>
+                            </div> 
                         </Grid>
-                        <Grid item xs={12} sm={4}>
-                            <Grid container justify="center" alignItems="center">
-                                <Grid item xs={6}>
+                        <Grid item xs={12} md={3} className="cart-total-summary">
+                            <Grid container justify="center" alignItems="center" className="cart-total-summary-details">
+                                <Grid item xs={6} className="cart-total-summary-details-style">
                                     Subtotal: 
                                 </Grid>
-                                <Grid item xs={6}>
-                                    {(this.state.totalCost).toFixed(2)}
+                                <Grid item xs={6} className="cart-total-summary-details-style amount">
+                                    ${formatNumberString(this.state.totalCost)}
                                 </Grid>
-                                <Grid item xs={6}>
+                                <Grid item xs={6} className="cart-total-summary-details-style">
                                     Tax (7%): 
                                 </Grid>
-                                <Grid item xs={6}>
-                                    {(this.state.taxCost).toFixed(2)} 
+                                <Grid item xs={6} className="cart-total-summary-details-style amount">
+                                    ${formatNumberString(this.state.taxCost)} 
                                 </Grid>
-                                <Grid item xs={6}>
+                                <Grid item xs={6} className="cart-total-summary-details-total">
                                     Total: 
                                 </Grid>
-                                <Grid item xs={6}>
-                                    {(this.state.totalCostWithTax).toFixed(2)} 
+                                <Grid item xs={6} className="cart-total-summary-details-total amount">
+                                    ${formatNumberString(this.state.totalCostWithTax)} 
                                 </Grid>
-                                <Grid item xs={12}>
+                                {/* <Grid item xs={12}>
                                     {this.getPaypalCheckoutButtonState()}
-                                </Grid>
+                                </Grid> */}
                             </Grid>
+                            <div className="cart-checkout-button">
+                                <Button className="cart-checkout-button-style">
+                                    Proceed to checkout
+                                </Button>
+                            </div>
                         </Grid>
                     </Grid>
                 </div>

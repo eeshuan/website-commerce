@@ -1,4 +1,20 @@
 .layout {
     height: 100%;
     width: 100%;
+
+    .page-title-style {
+        color: #000000;
+        font-size: 30px;
+        padding: 10px;
+    }
+
+    .column-header-style {
+        color: #000000;
+        font-size: 20px;
+        padding: 10px;
+    }
+
+    .page-text-style {
+        color: #0000ff;
+    }
 }

@@ -14,12 +14,12 @@ export default class Header extends React.Component {
         return (
             <div className="header">
                 <div className="header-logo">
-                    {/* <Link className="header-logo-button" to="/">
-                        <div style={{backgroundImage: `url(${assetsMap.pages.home.logo})`}}>
+                    <Link className="header-logo-button" to="/">
+                        {/* <div style={{backgroundImage: `url(${assetsMap.pages.home.logo})`}}>
 
-                        </div>
+                        </div> */}
                         <img src={assetsMap.pages.home.logo} className="header-logo-button-image"/>
-                    </Link> */}
+                    </Link>
                 </div>
                 <div className="header-navbar">
                     <Link className="header-navbar-button" to="/store">Store</Link>
