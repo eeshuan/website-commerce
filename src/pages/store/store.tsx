@@ -1,7 +1,7 @@
 import React from 'react';
 import Layout from '../layout/layout';
 import { ExpansionPanel, ExpansionPanelSummary, ExpansionPanelDetails, Grid } from '@material-ui/core';
-import ItemCard from '../../components/itemCard/itemCard';
+import ItemCard from '../../components/react/itemCard/itemCard';
 import Item from '../../scripts/class/item';
 import { testdata } from '../../testdata/testdata';
 

@@ -15,7 +15,7 @@ export default class Product extends React.Component {
     }
 
     private onAddToCartClick() {
-        CartCache.instance.addItems(this.props.match.params.name);
+        CartCache.instance.addItems(testdata.items[this.props.match.params.name]);
     }
 
     render() {

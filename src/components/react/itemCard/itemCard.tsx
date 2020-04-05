@@ -1,5 +1,5 @@
 import React from 'react';
-import Item from '../../scripts/class/item';
+import Item from '../../../scripts/class/item';
 import { Link } from 'react-router-dom';
 
 import './itemCard.scss';

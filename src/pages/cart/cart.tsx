@@ -5,13 +5,13 @@ import { testdata } from '../../testdata/testdata';
 import { CartCache } from '../../scripts/cache/cartCache';
 import PaypalExpressBtn from 'react-paypal-express-checkout';
 import { formatNumberString } from '../../scripts/utils/utils';
+import Item from '../../scripts/class/item';
 
 import './cart.scss';
 
 export default class Cart extends React.Component {
     private _sessionKey: string = `cart`;
-    private _itemQuantity: {[key: string]: number};
-    private _itemDetails: {[key: string]: {name: string, price: number, imageUrl: string}};
+    private _itemDetails: {[key: string]: {item: Item, count: number}};
 
     state = {
         totalCost: 0,
@@ -22,22 +22,13 @@ export default class Cart extends React.Component {
     constructor(public props) {
         super(props);
 
-        let jsonString: string = window.sessionStorage.getItem(this._sessionKey);
-        if (jsonString) {
-            this._itemQuantity = JSON.parse(jsonString);
-        }
-        else {
-            this._itemQuantity = {};
-        }
-
         this._itemDetails = {};
-        Object.keys(this._itemQuantity).map((key: string, index: number) => {
-            this._itemDetails[key] = {
-                name: testdata.items[key].name || `Cannot find name`,
-                price: testdata.items[key].price || 0,
-                imageUrl: testdata.items[key].imageUrl || ``,
+        CartCache.instance.getCartItems().map((data: {item: Item, count: number}, index: number) => {
+            this._itemDetails[data.item.id] = {
+                item: data.item,
+                count: data.count
             };
-            this.state[key] = this._itemQuantity[key];
+            this.state[data.item.id] = data.count;
         });
         this.state.totalCost = this.calculateTotalCost();
         this.state.taxCost = this.calculateTax();
@@ -53,19 +44,21 @@ export default class Cart extends React.Component {
         if (amount > 99999) {
             amount = 99999;
         }
-        CartCache.instance.setItems(itemId, amount);
-        this.setState({
-            [`${itemId}`]: amount,
-            totalCost: this.calculateTotalCost(),
-            taxCost: this.calculateTax(),
-            totalCostWithTax: this.calculateTotalCostWithTax()
-        });
+        if (this._itemDetails[itemId] != undefined) {
+            CartCache.instance.setItems(this._itemDetails[itemId].item, amount);
+            this.setState({
+                [`${itemId}`]: amount,
+                totalCost: this.calculateTotalCost(),
+                taxCost: this.calculateTax(),
+                totalCostWithTax: this.calculateTotalCostWithTax()
+            });
+        }
     }
 
     private calculateTotalCost(): number {
         let totalCost: number = 0;
-        Object.keys(this._itemQuantity).map((key: string, index: number) => {
-            totalCost += this._itemDetails[key].price * CartCache.instance.getCount(key);
+        Object.keys(this._itemDetails).map((key: string, index: number) => {
+            totalCost += this._itemDetails[key].item.price * CartCache.instance.getCount(key);
         });
         return totalCost;
     }
@@ -144,11 +137,11 @@ export default class Cart extends React.Component {
                                                     <Grid item xs={6} className="cart-order-summary-list-items-style">
                                                         <Grid container alignItems="center" justify="center">
                                                             <Grid item xs={4}>
-                                                                <img src={this._itemDetails[key].imageUrl} style={{width: '100px'}}></img>
+                                                                <img src={this._itemDetails[key].item.urlPath} style={{width: '100px'}}></img>
                                                             </Grid>
-                                                            <Grid xs={8}>
+                                                            <Grid item xs={8}>
                                                                 <div>
-                                                                    {this._itemDetails[key].name}
+                                                                    {this._itemDetails[key].item.name}
                                                                 </div>
                                                                 <div>
                                                                     Item Description here
@@ -161,7 +154,7 @@ export default class Cart extends React.Component {
                                                         </Grid>
                                                     </Grid>
                                                     <Grid item xs={2} className="cart-order-summary-list-items-style">
-                                                        ${formatNumberString(this._itemDetails[key].price)}
+                                                        ${formatNumberString(this._itemDetails[key].item.price)}
                                                     </Grid>
                                                     <Grid item xs={2}>
                                                         <TextField
@@ -174,7 +167,7 @@ export default class Cart extends React.Component {
                                                         />
                                                     </Grid>
                                                     <Grid item xs={2} className="cart-order-summary-list-items-style">
-                                                        ${formatNumberString(this._itemDetails[key].price * this.state[key])}
+                                                        ${formatNumberString(this._itemDetails[key].item.price * this.state[key])}
                                                     </Grid>
                                                 </Grid>
                                             );
