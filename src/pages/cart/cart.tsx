@@ -1,7 +1,6 @@
 import React from 'react';
 import Layout from '../layout/layout';
 import { Grid, TextField, Button } from '@material-ui/core';
-import { testdata } from '../../testdata/testdata';
 import { CartCache } from '../../scripts/cache/cartCache';
 import PaypalExpressBtn from 'react-paypal-express-checkout';
 import { formatNumberString } from '../../scripts/utils/utils';
@@ -10,7 +9,6 @@ import Item from '../../scripts/class/item';
 import './cart.scss';
 
 export default class Cart extends React.Component {
-    private _sessionKey: string = `cart`;
     private _itemDetails: {[key: string]: {item: Item, count: number}};
 
     state = {
@@ -137,7 +135,7 @@ export default class Cart extends React.Component {
                                                     <Grid item xs={6} className="cart-order-summary-list-items-style">
                                                         <Grid container alignItems="center" justify="center">
                                                             <Grid item xs={4}>
-                                                                <img src={this._itemDetails[key].item.urlPath} style={{width: '100px'}}></img>
+                                                                <img src={this._itemDetails[key].item.image} style={{width: '100px'}}></img>
                                                             </Grid>
                                                             <Grid item xs={8}>
                                                                 <div>

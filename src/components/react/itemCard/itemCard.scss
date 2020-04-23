@@ -3,4 +3,49 @@
     border: 2px solid #00000014;
     height: 500px;
     margin: 10px 30px;
+    text-decoration: none;
+
+    .itemcard-image {
+        text-align: center;
+    }
+
+    .itemcard-details {
+        position: absolute;
+        height: 100px;
+        width: 300px;
+        background-color: #333333a1;
+        top: 85%;
+        left: 50%;
+        transform: translateX(-50%) translateY(-50%);
+
+        .itemcard-details-name {
+            font-size: 30px;
+            color: #ffffff;
+            padding: 14px 0px;
+
+            transition: transform 0.15s cubic-bezier(0.16, -0.44, 0.93, -0.4);
+            transition: color 0.05s cubic-bezier(0.16, -0.44, 0.93, -0.4);
+        }
+
+        .itemcard-details-price {
+            font-size: 20px;
+            color: #ffffff;
+            
+            transition: transform 0.15s cubic-bezier(0.16, -0.44, 0.93, -0.4);
+            transition: color 0.05s cubic-bezier(0.16, -0.44, 0.93, -0.4);
+        }
+    }
+
+    &:hover, &:active {
+        .itemcard-details {
+            .itemcard-details-name {
+                transform: scale(1.1);
+                color: #fff49e;
+            }
+            .itemcard-details-price {
+                transform: scale(1.1);
+                color: #fff49e;
+            }
+        }
+    }
 }

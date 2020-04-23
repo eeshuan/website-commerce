@@ -15,6 +15,7 @@ import Item from "../../scripts/class/item";
 export function cart(state: {item: Item, count: number}[] = [], action: {type: string, object?: any, count?: number}) {
     switch(action.type) {
         case ADD_ITEM: {
+            console.log(action);
             if (state.find((item => item.item.id == action.object.id))) {
                 return state.map((item) => {
                     if (item.item.id == action.object.id) {

@@ -58,7 +58,7 @@ export default class Store extends React.Component {
                                     {
                                         this.testItems.map((data: Item, index: number) => {
                                             return (
-                                                <Grid item md={4} sm={6} xs={12} key={index}>
+                                                <Grid className="store-items-itemcontainer" item md={4} sm={6} xs={12} key={index}>
                                                     <ItemCard item={data}/>
                                                 </Grid>
                                             );
