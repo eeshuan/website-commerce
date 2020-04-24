@@ -1,4 +1,9 @@
 .body {
     background-color: #ffffff;
     padding: 120px 50px;
+    min-height: 90%;
+
+    @media screen and (max-width: 960px) {
+        padding: 80px 10px;
+    }
 }

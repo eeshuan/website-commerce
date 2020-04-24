@@ -1,0 +1,42 @@
+.login {
+    padding: 20px;
+
+    .login-box {
+        position: absolute;
+        text-align: center;
+        width: 25%;
+        left: 50%;
+        transform: translateX(-50%);
+        padding: 20px;
+        background-color: #f1f1f1;
+        border-radius: 10px;
+        border: 2px solid #989898;
+
+        .login-box-username {
+            text-align: center;
+        }
+
+        .login-box-password {
+            text-align: center;
+        }
+
+        .login-box-loginbutton {
+            text-align: center;
+            padding-top: 20px;
+            
+            .login-box-loginbutton-button {
+                background-color: #4d68f1;
+                width: 50%;
+                font-size: 24px;
+                font-family: 'Share';
+                color: #ffffff;
+    
+                transition: background-color 0.5s cubic-bezier(0.04, 0.66, 0.03, 1.06);            
+    
+                &:hover, &:active {
+                    background-color: #737373;
+                }
+            }
+        }
+    }
+}

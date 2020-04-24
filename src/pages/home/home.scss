@@ -1,4 +1,19 @@
-.hazelnut-home {
-    font-size: 20px;
-    color: #966e00;
+.home {
+    padding: 20px;
+    
+    .home-welcome {
+        font-size: 50px;
+        color: #1f4df9;
+        padding: 10px;
+    }
+
+    .home-intro {
+        font-size: 18px;        
+        color: #000000;
+        padding: 10px;
+    }
+
+    @media screen and (max-width: 960px) {
+        padding: 10px;
+    }
 }

@@ -11,7 +11,14 @@ export default class About extends React.Component {
     render () {
         return (
             <Layout>
-                This is the about
+                <div className="about">
+                    <div className="about-title">
+                        About
+                    </div>
+                    <div className="about-intro">
+                        I designed this page to explore redux. It is being used to store the selected cart items for checkout
+                    </div>
+                </div>
             </Layout>
         );
     }

@@ -1,7 +1,7 @@
 import React from 'react';
+import Layout from '../layout/layout';
 
 import './home.scss';
-import Layout from '../layout/layout';
 
 export default class Home extends React.Component {
     constructor(public props) {
@@ -11,8 +11,13 @@ export default class Home extends React.Component {
     render() {
         return (
             <Layout>
-                <div className="hazelnut-home">
-                    This is the beginning of the commerce website
+                <div className="home">
+                    <div className="home-welcome">
+                        Welcome!
+                    </div>
+                    <div className="home-intro">
+                        This is a simple e-commerce webpage designed by me
+                    </div>
                 </div>
             </Layout>           
         );

@@ -84,6 +84,10 @@ export default class Cart extends React.Component {
         console.log(`Cancelled Payment`);
     }
 
+    private onProceedToCheckoutClicked() {
+        alert(`Checkout Total: $${this.state.totalCostWithTax}`)
+    }
+
     private getPaypalCheckoutButtonState() {
         if (this.state.totalCostWithTax > 0) {
             return(
@@ -103,11 +107,76 @@ export default class Cart extends React.Component {
         }
     }
 
+    private getOrderSummary() {
+        if (Object.keys(this._itemDetails).length == 0) {
+            return (
+                <div className="cart-order-summary-list-items-noitems">
+                    Cart is empty
+                </div>
+            );
+        }
+        else {
+            return Object.keys(this._itemDetails).map((key: string, index: number) => {
+                return (
+                    <Grid container justify="center" alignItems="center" key={index}>
+                        <Grid item xs={6} className="cart-order-summary-list-items-style">
+                            <Grid container alignItems="center" justify="center">
+                                <Grid item xs={4}>
+                                    <img src={this._itemDetails[key].item.image} style={{width: '100px'}}></img>
+                                </Grid>
+                                <Grid item xs={8}>
+                                    <div>
+                                        {this._itemDetails[key].item.name}
+                                    </div>
+                                    <div>
+                                        Item Description here
+                                    </div>
+                                    <br></br>
+                                    <div>
+                                        Ref no: 1234567890
+                                    </div>
+                                </Grid>
+                            </Grid>
+                        </Grid>
+                        <Grid item xs={2} className="cart-order-summary-list-items-style">
+                            ${formatNumberString(this._itemDetails[key].item.price)}
+                        </Grid>
+                        <Grid item xs={2}>
+                            <TextField
+                                value={this.state[key]}
+                                onChange={this.updateAmount.bind(this, key)}
+                                type="number"
+                                variant="outlined"
+                                margin="normal"
+                                classes={{root: "cart-order-summary-list-items-quantity-style"}}
+                            />
+                        </Grid>
+                        <Grid item xs={2} className="cart-order-summary-list-items-style">
+                            ${formatNumberString(this._itemDetails[key].item.price * this.state[key])}
+                        </Grid>
+                    </Grid>
+                );
+            })
+        }
+    }
+
+    private getCheckoutButton() {
+        if (Object.keys(this._itemDetails).length > 0) {
+            return (
+                <div className="cart-checkout-button">
+                    <Button className="cart-checkout-button-style" onClick={this.onProceedToCheckoutClicked.bind(this)}>
+                        Proceed to checkout
+                    </Button>
+                </div>
+            );
+        }
+    }
+
     render () {
         return (
             <Layout>
                 <div className="cart">
-                    <Grid container justify="center" alignItems="center">
+                    <Grid container justify="center" alignItems="flex-start">
                         <Grid item xs={12} md={9} className="cart-order-summary">
                             <div className="page-title-style">
                                 Order Summary
@@ -128,49 +197,7 @@ export default class Cart extends React.Component {
                                     </Grid>
                                 </Grid>
                                 <div className="cart-order-summary-list-items">
-                                    {
-                                        Object.keys(this._itemDetails).map((key: string, index: number) => {
-                                            return (
-                                                <Grid container justify="center" alignItems="center" key={index}>
-                                                    <Grid item xs={6} className="cart-order-summary-list-items-style">
-                                                        <Grid container alignItems="center" justify="center">
-                                                            <Grid item xs={4}>
-                                                                <img src={this._itemDetails[key].item.image} style={{width: '100px'}}></img>
-                                                            </Grid>
-                                                            <Grid item xs={8}>
-                                                                <div>
-                                                                    {this._itemDetails[key].item.name}
-                                                                </div>
-                                                                <div>
-                                                                    Item Description here
-                                                                </div>
-                                                                <br></br>
-                                                                <div>
-                                                                    Ref no: 1234567890
-                                                                </div>
-                                                            </Grid>
-                                                        </Grid>
-                                                    </Grid>
-                                                    <Grid item xs={2} className="cart-order-summary-list-items-style">
-                                                        ${formatNumberString(this._itemDetails[key].item.price)}
-                                                    </Grid>
-                                                    <Grid item xs={2}>
-                                                        <TextField
-                                                            value={this.state[key]}
-                                                            onChange={this.updateAmount.bind(this, key)}
-                                                            type="number"
-                                                            variant="outlined"
-                                                            margin="normal"
-                                                            classes={{root: "cart-order-summary-list-items-quantity-style"}}
-                                                        />
-                                                    </Grid>
-                                                    <Grid item xs={2} className="cart-order-summary-list-items-style">
-                                                        ${formatNumberString(this._itemDetails[key].item.price * this.state[key])}
-                                                    </Grid>
-                                                </Grid>
-                                            );
-                                        })
-                                    }
+                                    {this.getOrderSummary()}
                                 </div>
                             </div> 
                         </Grid>
@@ -198,11 +225,7 @@ export default class Cart extends React.Component {
                                     {this.getPaypalCheckoutButtonState()}
                                 </Grid> */}
                             </Grid>
-                            <div className="cart-checkout-button">
-                                <Button className="cart-checkout-button-style">
-                                    Proceed to checkout
-                                </Button>
-                            </div>
+                            {this.getCheckoutButton()}
                         </Grid>
                     </Grid>
                 </div>

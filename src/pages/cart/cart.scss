@@ -14,6 +14,13 @@
             .cart-order-summary-list-items {
                 background-color: #f3f3f3;
 
+                .cart-order-summary-list-items-noitems {
+                    text-align: center;
+                    padding: 20px;
+                    font-size: 30px;
+                    color: black;
+                }
+
                 .cart-order-summary-list-items-style {
                     color: #000000;
                     padding: 12px;
@@ -49,6 +56,24 @@
         .cart-checkout-button {
             text-align: center;
             margin-top: 100px;
+        }
+    }
+
+    .cart-checkout-button {
+        text-align: center;
+
+        .cart-checkout-button-style {
+            background-color: #ef4646;
+            width: 75%;
+            font-size: 20px;
+            font-family: 'Share';
+            color: #ffffff;
+
+            transition: background-color 0.5s cubic-bezier(0.04, 0.66, 0.03, 1.06);            
+
+            &:hover, &:active {
+                background-color: #737373;
+            }
         }
     }
 }
