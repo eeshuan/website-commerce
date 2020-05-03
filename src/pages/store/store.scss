@@ -16,9 +16,28 @@
             }
 
             .store-navigation-panel-details {
-                padding-left: 50px;
                 font-size: 16px;
                 color: #4c3838;
+            }
+
+            .store-navigation-panel-priceslider {
+                width: 100%;
+            }
+
+            .store-navigation-panel-colourpicker {
+                display: flex;
+                flex-direction: column;
+
+                .store-navigation-panel-colourpicker-colour {
+                    margin-left: 5px;
+                    padding: 0px 10px;
+                    border: 1px solid #000000;
+                }
+            }
+
+            .store-navigation-panel-sizepicker {
+                display: flex;
+                flex-direction: column;
             }
         }
     }
